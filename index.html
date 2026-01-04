@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Purple with Green Accent Theme (Default) */
             --main-color: #bd00ff; 
             --accent-color: #0fff50; 
             --alert-color: #ff0055;
@@ -33,11 +32,22 @@
             background-image: radial-gradient(circle at 50% 50%, #150020 0%, #000 100%);
         }
 
-        /* --- EFECTOS CRT --- */
         .crt-lines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); background-size: 100% 2px, 3px 100%; display: block; }
         .vignette { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 51; background: radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,0.9) 100%); }
         
         #matrix-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.15; display: none; }
+
+        body.low-perf * { 
+            box-shadow: none !important; 
+            text-shadow: none !important; 
+            backdrop-filter: none !important; 
+            transition: none !important;
+            animation: none !important;
+        }
+        body.low-perf #matrix-canvas, 
+        body.low-perf .crt-lines, 
+        body.low-perf .vignette { display: none !important; }
+        body.low-perf .window { background: #000; border: 1px solid var(--main-color); }
 
         .container { 
             width: 100%; 
@@ -48,7 +58,6 @@
             z-index: 10; 
         }
 
-        /* --- HEADER HUD --- */
         .hud-header {
             display: grid;
             grid-template-columns: 1fr auto 1fr;
@@ -71,14 +80,12 @@
         .lang-btn { background: transparent; border: 1px solid var(--main-color); color: var(--main-color); padding: 5px 15px; cursor: pointer; font-family: inherit; font-weight: bold; transition: 0.3s; font-size: 0.7rem; }
         .lang-btn:hover { background: var(--main-color); color: #000; }
 
-        /* --- LAYOUT --- */
         .main-layout { 
             display: grid; 
             grid-template-columns: 350px 1fr; 
             gap: 30px; 
         }
 
-        /* --- PROFILE --- */
         .profile-card { 
             background: rgba(10, 5, 15, 0.6); 
             border: 1px solid var(--main-color); 
@@ -88,7 +95,7 @@
             height: fit-content; 
             position: relative;
         }
-        .profile-card::after { content: "ID_CARD_V7.0"; position: absolute; top: 5px; right: 5px; font-size: 0.6rem; opacity: 0.5; }
+        .profile-card::after { content: "ID_CARD_V8.5"; position: absolute; top: 5px; right: 5px; font-size: 0.6rem; opacity: 0.5; }
         
         .pfp-container { position: relative; width: 140px; height: 140px; margin: 0 auto 10px; }
         .pfp-img { width: 100%; height: 100%; border-radius: 10px; border: 2px solid var(--main-color); object-fit: cover; }
@@ -109,13 +116,11 @@
         .social-icon { color: #888; font-size: 1.2rem; transition: 0.3s; text-decoration: none; }
         .social-icon:hover { color: var(--main-color); transform: scale(1.2); }
 
-        /* --- WINDOWS SYSTEM --- */
-        .windows-container { position: relative; height: auto; min-height: 400px; /* Reduced to avoid initial scroll */ }
+        .windows-container { position: relative; height: auto; min-height: 400px; }
 
         .window {
             background: var(--window-bg); 
             border: 1px solid var(--main-color); 
-            /* Dynamic sizing logic */
             width: fit-content; 
             min-width: 340px;
             max-width: 480px;
@@ -144,7 +149,6 @@
         .minimized .win-content { display: none; }
         .minimized { height: auto !important; width: 220px !important; min-width: auto !important; }
 
-        /* --- LAST.FM STYLES --- */
         .lfm-header-art { width: 100%; height: 120px; object-fit: cover; border-bottom: 1px solid var(--main-color); opacity: 0.6; mask-image: linear-gradient(to bottom, black 50%, transparent 100%); }
         .lfm-now-playing-box { margin-top: -40px; padding: 0 15px; position: relative; display: flex; gap: 15px; align-items: flex-end; }
         .lfm-main-cover { width: 80px; height: 80px; border: 2px solid var(--main-color); background: #000; object-fit: cover; flex-shrink: 0; }
@@ -161,29 +165,26 @@
         .lfm-hist-item { display: flex; justify-content: space-between; font-size: 0.75rem; padding: 4px 0; border-bottom: 1px dashed #333; gap: 10px;}
         .lfm-hist-item:last-child { border: none; }
         .lfm-tag-cloud { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
-        .lfm-tag { background: rgba(255,255,255,0.1); padding: 2px 6px; font-size: 0.7rem; border-radius: 4px; color: var(--accent-color); border: 1px solid rgba(255,255,255,0.1); }
+        .lfm-tag { background: rgba(255,255,255,0.1); padding: 4px 8px; font-size: 0.75rem; border-radius: 4px; color: var(--accent-color); border: 1px solid rgba(255,255,255,0.1); display: inline-block; }
 
-        /* --- SETTINGS WINDOW --- */
         .color-picker-grid { display: flex; gap: 10px; margin-top: 10px; justify-content: center; }
         .color-dot { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid #555; transition: 0.2s; }
         .color-dot:hover { transform: scale(1.1); }
         .color-dot.active { border-color: #fff; box-shadow: 0 0 10px #fff; }
         .switch-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        
-        /* --- GAME RANKS --- */
-        .game-rank { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; background: rgba(255,255,255,0.05); padding: 8px; border-radius: 4px; }
-        .rank-icon { width: 35px; height: 35px; background: #222; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; color: #ffd700; border: 1px solid #444; flex-shrink: 0; }
+        .switch-input { cursor: pointer; }
 
-        /* --- TERMINAL WIDGET --- */
-        .term-inline { background: #050208; color: #dcb0ff; font-family: monospace; padding: 10px; height: 150px; overflow-y: auto; border: 1px solid #333; font-size: 0.8rem; margin-top: 10px; }
+        .game-rank { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; background: rgba(255,255,255,0.05); padding: 8px; border-radius: 4px; }
+        .rank-text-only { flex: 1; }
+
+        .term-inline { background: #000; color: #ccc; font-family: monospace; padding: 10px; height: 150px; overflow-y: auto; border: 1px solid #333; font-size: 0.8rem; margin-top: 10px; }
         .term-line { margin-bottom: 2px; word-break: break-all; }
         .term-cursor { display: inline-block; width: 6px; height: 14px; background: var(--main-color); animation: blink 1s infinite; vertical-align: middle; }
 
-        /* --- TASKBAR --- */
         .taskbar { 
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
             width: 90%; max-width: 800px; height: 60px; 
-            background: rgba(15, 5, 20, 0.9); border: 1px solid var(--main-color); 
+            background: rgba(10, 2, 15, 0.9); border: 1px solid var(--main-color); 
             border-radius: 30px; z-index: 9999; 
             display: flex; align-items: center; justify-content: space-between; padding: 0 25px; 
             box-shadow: 0 5px 30px rgba(0,0,0,0.8); 
@@ -212,7 +213,6 @@
             .hud-header { grid-template-columns: 1fr; text-align: center; gap: 15px; }
             .hud-left, .hud-right { justify-content: center; text-align: center; }
             .windows-container { display: flex; flex-direction: column; gap: 20px; min-height: auto; }
-            /* Mobile window adaptation */
             .window { position: relative !important; top: auto !important; left: auto !important; width: 100% !important; max-width: 100% !important; margin-bottom: 10px; z-index: 1 !important; height: auto !important; min-width: 0 !important; }
             .taskbar { bottom: 0; width: 100%; border-radius: 0; border-bottom: none; border-left: none; border-right: none; }
             .lfm-grid-stats { grid-template-columns: 1fr 1fr; }
@@ -234,7 +234,7 @@
             </div>
             <div class="hud-center">
                 <div class="sys-title">ALQKY CARD</div>
-                <div class="sys-subtitle">KERNEL v7.0 // PURPLE-GREEN</div>
+                <div class="sys-subtitle">KERNEL v8.5 // PURPLE-NEON</div>
             </div>
             <div class="hud-right">
                 <div style="display:flex; align-items:center; gap:10px; justify-content: flex-end;">
@@ -259,7 +259,7 @@
                 <div style="text-align:left; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-bottom: 15px;">
                     <div style="margin-bottom:5px; font-size:0.75rem; color:#888;">BIO_DATA:</div>
                     <p style="font-size:0.85rem; line-height: 1.5;" data-lang-key="bio">
-                        Diseñador Gráfico Promedio. Amante de la musica, juegos competitivos y crear ruido visual.
+                        Diseñador Gráfico Promedio. Me gusta mucho la música, sobre todo la música indie, los juegos competitivos y crear ruido visual.
                     </p>
                 </div>
 
@@ -278,7 +278,6 @@
 
             <div class="windows-container" id="desktop-area">
 
-                <!-- SETTINGS WINDOW -->
                 <div class="window" id="win-settings" style="top: 0; left: 0; z-index: 100; display: none;">
                     <div class="win-header">
                         <span class="win-title" data-lang-key="settings_title"><i class="fas fa-cog"></i> SETTINGS</span>
@@ -296,18 +295,21 @@
                         </div>
                         <div style="margin-top:20px;">
                             <div class="switch-row">
+                                <span>Performance Mode (Anti-Lag)</span>
+                                <input type="checkbox" class="switch-input" onchange="togglePerf(this.checked)">
+                            </div>
+                            <div class="switch-row">
                                 <span>CRT Scanlines</span>
-                                <input type="checkbox" checked onchange="document.getElementById('crt-overlay').style.display = this.checked ? 'block' : 'none'">
+                                <input type="checkbox" checked class="switch-input" onchange="document.getElementById('crt-overlay').style.display = this.checked ? 'block' : 'none'">
                             </div>
                             <div class="switch-row">
                                 <span>Matrix BG</span>
-                                <input type="checkbox" onchange="toggleMatrix(this.checked)">
+                                <input type="checkbox" class="switch-input" onchange="toggleMatrix(this.checked)">
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- LAST.FM WINDOW (Dynamic Width) -->
                 <div class="window" id="win-lastfm" style="top: 0; left: 0; width: 100%; max-width:550px;">
                     <div class="win-header">
                         <span class="win-title" data-lang-key="weekly_report"><i class="fab fa-lastfm"></i> WEEKLY REPORT</span>
@@ -354,8 +356,8 @@
                                     <div style="font-size:1rem; color:var(--main-color); font-weight:bold;" id="lfm-total">---</div>
                                 </div>
                                 <div style="text-align:center; flex:1; border-left:1px solid rgba(255,255,255,0.1);">
-                                    <div style="font-size:0.6rem; color:#888;" data-lang-key="this_week">THIS WEEK</div>
-                                    <div style="font-size:1rem; color:var(--accent-color); font-weight:bold;" id="lfm-weekly">---</div>
+                                    <div style="font-size:0.6rem; color:#888;" data-lang-key="loved_count">LOVED TRACKS</div>
+                                    <div style="font-size:1rem; color:var(--accent-color); font-weight:bold;" id="lfm-loved">---</div>
                                 </div>
                             </div>
 
@@ -376,8 +378,7 @@
                     </div>
                 </div>
 
-                <!-- HONOR OF KINGS -->
-                <div class="window" id="win-hok" style="top: 0; left: 560px;">
+                <div class="window" id="win-hok" style="top: 0; left: 52%; min-width: 320px;">
                     <div class="win-header">
                         <span class="win-title"><i class="fas fa-dragon"></i> HONOR OF KINGS</span>
                         <div class="win-controls">
@@ -387,15 +388,13 @@
                     </div>
                     <div class="win-content">
                         <div class="game-rank">
-                            <div class="rank-icon"><i class="fas fa-gem"></i></div>
-                            <div style="flex:1;">
+                            <div class="rank-text-only">
                                 <div style="font-size:0.8rem; color:#888;" data-lang-key="rank">Current Rank</div>
                                 <div style="font-weight:bold; color:#e5e4e2;">DIAMOND II</div>
                             </div>
                         </div>
                         <div class="game-rank">
-                            <div class="rank-icon" style="color:#ff0055;"><i class="fas fa-magic"></i></div>
-                            <div style="flex:1;">
+                            <div class="rank-text-only">
                                 <div style="font-size:0.8rem; color:#888;" data-lang-key="role_game">Primary Role</div>
                                 <div style="font-weight:bold;">MID LANE</div>
                             </div>
@@ -407,8 +406,7 @@
                     </div>
                 </div>
 
-                <!-- LEAGUE OF LEGENDS -->
-                <div class="window" id="win-lol" style="top: 250px; left: 560px;">
+                <div class="window" id="win-lol" style="top: 250px; left: 52%;">
                     <div class="win-header">
                         <span class="win-title" data-lang-key="lol_title"><i class="fas fa-gamepad"></i> LEAGUE OF LEGENDS</span>
                         <div class="win-controls">
@@ -428,12 +426,14 @@
                                 <span class="social-btn" style="padding:4px 8px; font-size:0.7rem;">ZERI</span>
                             </div>
                         </div>
-                        <div style="text-align:right; font-size:0.7rem; margin-top:5px;">Winrate: 58%</div>
+                        <div class="progress-bar" style="background:#221111; margin-top:10px; height: 4px; width: 100%;">
+                            <div style="width:58%; height:100%; background:#00ffff;"></div>
+                        </div>
+                        <div style="text-align:right; font-size:0.7rem; margin-top:2px;">Winrate: 58%</div>
                     </div>
                 </div>
 
-                <!-- OSU STATS -->
-                <div class="window" id="win-osu" style="top: 480px; left: 560px;">
+                <div class="window" id="win-osu" style="top: 480px; left: 52%;">
                     <div class="win-header">
                         <span class="win-title"><i class="fas fa-circle-notch"></i> OSU! TRACKER</span>
                         <div class="win-controls">
@@ -443,7 +443,6 @@
                     </div>
                     <div class="win-content">
                         <div style="display:flex; gap:15px; align-items:center; margin-bottom:15px;">
-                            <!-- Corrected Direct Link -->
                             <img src="https://i.postimg.cc/Ff27GHk8/image.png" style="width:60px; height:60px; border-radius:10px; border:1px solid #ff66aa; display:block; object-fit:cover;">
                             <div>
                                 <div style="font-weight:bold; font-size:1.1rem; color:#ff66aa;">Alqky</div>
@@ -469,8 +468,7 @@
                     </div>
                 </div>
 
-                <!-- TERMINAL -->
-                <div class="window" id="win-term" style="top: 600px; left: 0; width: 100%; max-width:550px;">
+                <div class="window" id="win-term" style="top: 650px; left: 0; width: 100%; max-width:550px;">
                     <div class="win-header">
                         <span class="win-title"><i class="fas fa-terminal"></i> SYS.TERMINAL</span>
                         <div class="win-controls">
@@ -491,7 +489,6 @@
         </div>
     </div>
 
-    <!-- TASKBAR -->
     <div class="taskbar">
         <div class="start-btn" onclick="toggleStartMenu()"><i class="fas fa-shapes"></i> MENU</div>
         <div class="dock-icons">
@@ -505,7 +502,6 @@
         <div style="font-size:0.8rem; font-weight:bold; color:#888;" id="taskbar-clock">00:00</div>
     </div>
 
-    <!-- START MENU -->
     <div class="start-menu" id="start-menu">
         <div style="background:#111; padding:10px; font-size:0.7rem; color:#666; font-weight:bold;">APPLICATIONS</div>
         <div class="menu-item" onclick="openWindow('win-lastfm')"><i class="fab fa-lastfm"></i> Weekly Report</div>
@@ -517,28 +513,26 @@
     </div>
 
     <script>
-        // --- TRANSLATIONS ---
         const translations = {
             es: { 
                 role: "DISEÑADOR GRÁFICO PROMEDIO", date_locale: "es-MX", 
                 rank: "Rango Actual", role_game: "Rol Principal",
-                bio: "Diseñador Gráfico Promedio. Amante del audio de alta fidelidad, juegos competitivos y crear ruido visual.",
+                bio: "Diseñador Gráfico Promedio. Me gusta mucho la música, sobre todo la música indie, los juegos competitivos y crear ruido visual.",
                 top_artist: "Top Artista", top_album: "Top Álbum", top_track: "Top Canción",
                 weekly_report: "REPORTE SEMANAL", lol_title: "LEAGUE OF LEGENDS",
-                this_week: "ESTA SEMANA", settings_title: "AJUSTES"
+                loved_count: "CANCIONES FAVS", settings_title: "AJUSTES"
             },
             en: { 
                 role: "AVERAGE GRAPHIC DESIGNER", date_locale: "en-US", 
                 rank: "Current Rank", role_game: "Primary Role",
-                bio: "Average Graphic Designer. Lover of music, competitive games, and creating visual noise.",
+                bio: "Average Graphic Designer. I really like music, especially indie music, competitive games, and creating visual noise.",
                 top_artist: "Top Artist", top_album: "Top Album", top_track: "Top Track",
                 weekly_report: "WEEKLY REPORT", lol_title: "LEAGUE OF LEGENDS",
-                this_week: "THIS WEEK", settings_title: "SETTINGS"
+                loved_count: "LOVED TRACKS", settings_title: "SETTINGS"
             }
         };
-        let currentLang = 'es'; // Changed default to ES to match bio default
+        let currentLang = 'es'; 
 
-        // --- CORE FUNCTIONS ---
         function updateClock() {
             const now = new Date();
             document.getElementById('clock-display').innerText = now.toLocaleTimeString([], {hour12: false});
@@ -565,7 +559,6 @@
             updateClock(); 
         }
 
-        // --- THEME SETTINGS ---
         function changeTheme(main, accent, el) {
             document.documentElement.style.setProperty('--main-color', main);
             document.documentElement.style.setProperty('--accent-color', accent);
@@ -594,8 +587,11 @@
             } else { cvs.style.display = 'none'; clearInterval(matrixInterval); }
         }
 
+        function togglePerf(enable) {
+            if(enable) document.body.classList.add('low-perf');
+            else document.body.classList.remove('low-perf');
+        }
 
-        // --- DRAGGING LOGIC ---
         function makeDraggable(el) {
             const h = el.querySelector(".win-header");
             if(!h) return;
@@ -603,7 +599,6 @@
             let startX, startY, initialLeft, initialTop;
             h.onmousedown = (e) => {
                 if(e.target.tagName === 'BUTTON') return; 
-                // Removed width check to allow dragging on resized desktop windows, CSS handles mobile layout overrides
                 e.preventDefault(); isDragging = true;
                 startX = e.clientX; startY = e.clientY;
                 initialLeft = el.offsetLeft; initialTop = el.offsetTop;
@@ -628,9 +623,8 @@
         }
         function toggleStartMenu() { const m = document.getElementById('start-menu'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; }
 
-        // --- TERMINAL ---
         const termOut = document.getElementById('console-output');
-        const bootLines = ["Kernel v7.0...", "User: ALQKY", "Osu: Static Data Loaded", "System Ready."];
+        const bootLines = ["Kernel v8.5...", "User: ALQKY", "Performance Mode: Ready", "System Ready."];
         async function runBootSequence() {
             for(let line of bootLines) {
                 termOut.innerHTML += `<div class="term-line">> ${line}</div>`;
@@ -654,9 +648,7 @@
             }
         });
 
-        /* --- LAST.FM API --- */
         (function() {
-            // Obfuscated Key (Reversed)
             const _k = "2e94b31f53470e0a17eced7a11c3e4af"; 
             const API_KEY = _k.split('').reverse().join('');
             const USER = 'Alekiin';
@@ -664,7 +656,6 @@
 
             async function fetchLFM() {
                 try {
-                    // 1. RECENT TRACKS & HISTORY
                     const recentRes = await fetch(`${URL_BASE}?method=user.getrecenttracks&user=${USER}&api_key=${API_KEY}&format=json&limit=10`);
                     const recentData = await recentRes.json();
                     
@@ -673,7 +664,6 @@
                         const current = tracks[0];
                         const isPlaying = current['@attr'] && current['@attr'].nowplaying;
 
-                        // UI Update - Now Playing
                         document.getElementById('lfm-track').innerText = current.name;
                         document.getElementById('lfm-artist').innerText = current.artist['#text'];
                         document.getElementById('lfm-status').innerText = isPlaying ? "NOW PLAYING" : "LAST PLAYED";
@@ -684,7 +674,6 @@
                             document.getElementById('lfm-header-bg').src = current.image[3]['#text'];
                         }
 
-                        // UI Update - History List
                         const histContainer = document.getElementById('lfm-history');
                         histContainer.innerHTML = '';
                         tracks.slice(1, 6).forEach(t => {
@@ -692,30 +681,32 @@
                         });
                     }
 
-                    // 2. USER INFO
                     const userRes = await fetch(`${URL_BASE}?method=user.getinfo&user=${USER}&api_key=${API_KEY}&format=json`);
                     const userData = await userRes.json();
                     document.getElementById('lfm-total').innerText = parseInt(userData.user.playcount).toLocaleString();
 
-                    // 3. TOP TAGS
-                    const tagsRes = await fetch(`${URL_BASE}?method=user.gettoptags&user=${USER}&api_key=${API_KEY}&format=json&limit=5`);
+                    const lovedRes = await fetch(`${URL_BASE}?method=user.getlovedtracks&user=${USER}&api_key=${API_KEY}&format=json&limit=1`);
+                    const lovedData = await lovedRes.json();
+                    if(lovedData.lovedtracks && lovedData.lovedtracks['@attr']) {
+                        document.getElementById('lfm-loved').innerText = parseInt(lovedData.lovedtracks['@attr'].total).toLocaleString();
+                    }
+
+                    const tagsRes = await fetch(`${URL_BASE}?method=user.gettoptags&user=${USER}&api_key=${API_KEY}&format=json&limit=15`);
                     const tagsData = await tagsRes.json();
                     const tagContainer = document.getElementById('lfm-tags');
                     tagContainer.innerHTML = '';
-                    tagsData.toptags.tag.forEach(tag => {
+                    
+                    const fallbackTags = ["indie", "rock", "lo-fi", "electronic", "pop"];
+                    let tagsToShow = tagsData.toptags.tag;
+                    
+                    if (tagsToShow.length < 5) {
+                        tagsToShow = [...tagsToShow, ...fallbackTags.map(name => ({name}))].slice(0, 10);
+                    }
+
+                    tagsToShow.forEach(tag => {
                         tagContainer.innerHTML += `<span class="lfm-tag">${tag.name}</span>`;
                     });
 
-                    // 4. REAL WEEKLY STATS (Sum of Weekly Chart)
-                    const wChartRes = await fetch(`${URL_BASE}?method=user.getweeklytrackchart&user=${USER}&api_key=${API_KEY}&format=json`);
-                    const wChartData = await wChartRes.json();
-                    let weeklySum = 0;
-                    if(wChartData.weeklytrackchart && wChartData.weeklytrackchart.track) {
-                        wChartData.weeklytrackchart.track.forEach(t => weeklySum += parseInt(t.playcount));
-                    }
-                    document.getElementById('lfm-weekly').innerText = weeklySum.toLocaleString();
-
-                    // 5. WEEKLY CHARTS
                     const artRes = await fetch(`${URL_BASE}?method=user.gettopartists&user=${USER}&api_key=${API_KEY}&format=json&period=7day&limit=1`);
                     const artData = await artRes.json();
                     if(artData.topartists.artist[0]) {
