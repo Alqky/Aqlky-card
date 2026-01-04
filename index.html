@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Alqky OS v5.0</title>
+    <title>Alqky Card</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --main-color: #0fff50; 
-            --accent-color: #00ffff;
+            /* Purple with Green Accent Theme (Default) */
+            --main-color: #bd00ff; 
+            --accent-color: #0fff50; 
             --alert-color: #ff0055;
-            --bg-color: #050505;
-            --window-bg: rgba(5, 12, 8, 0.95);
+            --bg-color: #08020a;
+            --window-bg: rgba(10, 2, 15, 0.95);
             --font-stack: 'JetBrains Mono', monospace;
-            --glow: 0 0 10px rgba(15, 255, 80, 0.5);
+            --glow: 0 0 15px rgba(189, 0, 255, 0.3);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; scrollbar-width: thin; scrollbar-color: var(--main-color) #111; }
@@ -27,15 +28,15 @@
             overflow-x: hidden; 
             display: flex; 
             flex-direction: column; 
-            cursor: crosshair;
-            padding-bottom: 80px; 
+            padding-bottom: 90px; 
             transition: color 0.5s, background 0.5s;
-            background-image: radial-gradient(circle at 50% 50%, #0a150a 0%, #000 100%);
+            background-image: radial-gradient(circle at 50% 50%, #150020 0%, #000 100%);
         }
 
         /* --- EFECTOS CRT --- */
-        .crt-lines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); background-size: 100% 2px, 3px 100%; }
+        .crt-lines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); background-size: 100% 2px, 3px 100%; display: block; }
         .vignette { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 51; background: radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,0.9) 100%); }
+        
         #matrix-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.15; display: none; }
 
         .container { 
@@ -54,8 +55,8 @@
             align-items: center;
             padding: 15px 20px;
             border-bottom: 2px solid var(--main-color);
-            background: linear-gradient(to right, rgba(0,20,0,0), rgba(0,20,0,0.8), rgba(0,20,0,0));
-            margin-bottom: 40px;
+            background: linear-gradient(to right, rgba(0,0,0,0), rgba(20,0,30,0.8), rgba(0,0,0,0));
+            margin-bottom: 30px;
             backdrop-filter: blur(5px);
             position: relative;
         }
@@ -65,11 +66,8 @@
         .hud-center { text-align: center; }
         .sys-title { font-size: 2rem; font-weight: 800; letter-spacing: 5px; text-shadow: 0 0 10px var(--main-color); }
         .sys-subtitle { font-size: 0.7rem; background: var(--main-color); color: #000; padding: 2px 8px; font-weight: bold; letter-spacing: 2px; }
-        
         .hud-right { text-align: right; display: flex; flex-direction: column; gap: 5px; font-size: 0.8rem; }
-        .status-dot { width: 10px; height: 10px; background: var(--main-color); border-radius: 50%; display: inline-block; box-shadow: 0 0 10px var(--main-color); animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-
+        
         .lang-btn { background: transparent; border: 1px solid var(--main-color); color: var(--main-color); padding: 5px 15px; cursor: pointer; font-family: inherit; font-weight: bold; transition: 0.3s; font-size: 0.7rem; }
         .lang-btn:hover { background: var(--main-color); color: #000; }
 
@@ -82,7 +80,7 @@
 
         /* --- PROFILE --- */
         .profile-card { 
-            background: rgba(0, 15, 5, 0.6); 
+            background: rgba(10, 5, 15, 0.6); 
             border: 1px solid var(--main-color); 
             padding: 25px; 
             text-align: center; 
@@ -90,7 +88,7 @@
             height: fit-content; 
             position: relative;
         }
-        .profile-card::after { content: "ID_CARD_V5"; position: absolute; top: 5px; right: 5px; font-size: 0.6rem; opacity: 0.5; }
+        .profile-card::after { content: "ID_CARD_V7.0"; position: absolute; top: 5px; right: 5px; font-size: 0.6rem; opacity: 0.5; }
         
         .pfp-container { position: relative; width: 140px; height: 140px; margin: 0 auto 10px; }
         .pfp-img { width: 100%; height: 100%; border-radius: 10px; border: 2px solid var(--main-color); object-fit: cover; }
@@ -105,30 +103,32 @@
             transition: 0.3s;
         }
         .btn-action.secondary { background: transparent; border: 1px solid var(--main-color); color: var(--main-color); }
-        .btn-action:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(15, 255, 80, 0.3); }
+        .btn-action:hover { transform: translateY(-2px); box-shadow: 0 5px 15px var(--glow); }
 
         .social-links { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
         .social-icon { color: #888; font-size: 1.2rem; transition: 0.3s; text-decoration: none; }
         .social-icon:hover { color: var(--main-color); transform: scale(1.2); }
 
         /* --- WINDOWS SYSTEM --- */
-        .windows-container { position: relative; min-height: 700px; }
+        .windows-container { position: relative; height: auto; min-height: 400px; /* Reduced to avoid initial scroll */ }
 
         .window {
             background: var(--window-bg); 
             border: 1px solid var(--main-color); 
-            width: 400px; 
+            /* Dynamic sizing logic */
+            width: fit-content; 
+            min-width: 340px;
+            max-width: 480px;
             display: flex; flex-direction: column; 
             box-shadow: 10px 10px 30px rgba(0,0,0,0.5); 
             backdrop-filter: blur(15px);
             position: absolute; 
             transition: opacity 0.3s;
         }
-        /* Fix for desktop dragging cursor */
         .window .win-header { cursor: move; } 
 
         .win-header { 
-            background: rgba(0, 255, 80, 0.1); 
+            background: rgba(189, 0, 255, 0.1); 
             padding: 8px 12px; 
             border-bottom: 1px solid var(--main-color); 
             display: flex; justify-content: space-between; align-items: center; 
@@ -140,28 +140,42 @@
         .btn-min { background: #ffcc00; }
         .btn-close { background: #ff4444; }
 
-        .win-content { padding: 15px; font-size: 0.9rem; color: #ccffcc; }
+        .win-content { padding: 15px; font-size: 0.9rem; color: #eebbff; }
         .minimized .win-content { display: none; }
-        .minimized { height: auto !important; width: 200px !important; }
+        .minimized { height: auto !important; width: 220px !important; min-width: auto !important; }
 
-        /* --- WIDGETS SPECIFICS --- */
-        /* LastFM Detailed Stats */
-        .lfm-header-art { width: 100%; height: 120px; object-fit: cover; border-bottom: 1px solid var(--main-color); opacity: 0.6; }
+        /* --- LAST.FM STYLES --- */
+        .lfm-header-art { width: 100%; height: 120px; object-fit: cover; border-bottom: 1px solid var(--main-color); opacity: 0.6; mask-image: linear-gradient(to bottom, black 50%, transparent 100%); }
         .lfm-now-playing-box { margin-top: -40px; padding: 0 15px; position: relative; display: flex; gap: 15px; align-items: flex-end; }
-        .lfm-main-cover { width: 80px; height: 80px; border: 2px solid var(--main-color); background: #000; object-fit: cover; }
-        .lfm-np-text { flex: 1; padding-bottom: 5px; }
+        .lfm-main-cover { width: 80px; height: 80px; border: 2px solid var(--main-color); background: #000; object-fit: cover; flex-shrink: 0; }
+        .lfm-np-text { flex: 1; padding-bottom: 5px; overflow: hidden; }
+        .lfm-track-title { font-weight:900; font-size:1.1rem; line-height:1.1; text-shadow:2px 2px 2px #000; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
-        .lfm-grid-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; margin-top: 15px; text-align: center; }
-        .lfm-stat-card { background: rgba(255,255,255,0.05); padding: 8px; border: 1px solid #333; }
+        .lfm-grid-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 15px; text-align: center; }
+        .lfm-stat-card { background: rgba(255,255,255,0.05); padding: 8px; border: 1px solid #333; overflow: hidden; }
         .lfm-card-label { font-size: 0.6rem; color: #888; margin-bottom: 4px; text-transform: uppercase; }
-        .lfm-card-val { font-size: 0.8rem; font-weight: bold; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .lfm-card-sub { font-size: 0.7rem; color: var(--accent-color); }
+        .lfm-card-val { font-size: 0.75rem; font-weight: bold; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .lfm-card-sub { font-size: 0.65rem; color: var(--accent-color); }
 
-        .game-rank { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; background: rgba(255,255,255,0.05); padding: 5px; }
-        .rank-icon { width: 30px; height: 30px; background: #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #ffd700; }
+        .lfm-history-list { margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; max-height: 120px; overflow-y: auto; }
+        .lfm-hist-item { display: flex; justify-content: space-between; font-size: 0.75rem; padding: 4px 0; border-bottom: 1px dashed #333; gap: 10px;}
+        .lfm-hist-item:last-child { border: none; }
+        .lfm-tag-cloud { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+        .lfm-tag { background: rgba(255,255,255,0.1); padding: 2px 6px; font-size: 0.7rem; border-radius: 4px; color: var(--accent-color); border: 1px solid rgba(255,255,255,0.1); }
+
+        /* --- SETTINGS WINDOW --- */
+        .color-picker-grid { display: flex; gap: 10px; margin-top: 10px; justify-content: center; }
+        .color-dot { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid #555; transition: 0.2s; }
+        .color-dot:hover { transform: scale(1.1); }
+        .color-dot.active { border-color: #fff; box-shadow: 0 0 10px #fff; }
+        .switch-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        
+        /* --- GAME RANKS --- */
+        .game-rank { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; background: rgba(255,255,255,0.05); padding: 8px; border-radius: 4px; }
+        .rank-icon { width: 35px; height: 35px; background: #222; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; color: #ffd700; border: 1px solid #444; flex-shrink: 0; }
 
         /* --- TERMINAL WIDGET --- */
-        .term-inline { background: #000; color: #ccc; font-family: monospace; padding: 10px; height: 150px; overflow-y: auto; border: 1px solid #333; font-size: 0.8rem; margin-top: 10px; }
+        .term-inline { background: #050208; color: #dcb0ff; font-family: monospace; padding: 10px; height: 150px; overflow-y: auto; border: 1px solid #333; font-size: 0.8rem; margin-top: 10px; }
         .term-line { margin-bottom: 2px; word-break: break-all; }
         .term-cursor { display: inline-block; width: 6px; height: 14px; background: var(--main-color); animation: blink 1s infinite; vertical-align: middle; }
 
@@ -169,7 +183,7 @@
         .taskbar { 
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
             width: 90%; max-width: 800px; height: 60px; 
-            background: rgba(10, 10, 10, 0.9); border: 1px solid var(--main-color); 
+            background: rgba(15, 5, 20, 0.9); border: 1px solid var(--main-color); 
             border-radius: 30px; z-index: 9999; 
             display: flex; align-items: center; justify-content: space-between; padding: 0 25px; 
             box-shadow: 0 5px 30px rgba(0,0,0,0.8); 
@@ -182,36 +196,33 @@
         .start-btn:hover { background: #fff; box-shadow: 0 0 15px #fff; }
         
         .dock-icons { display: flex; gap: 20px; }
-        .dock-icon { font-size: 1.4rem; color: #555; cursor: pointer; transition: 0.3s; position: relative; }
+        .dock-icon { font-size: 1.4rem; color: #888; cursor: pointer; transition: 0.3s; position: relative; }
         .dock-icon:hover, .dock-icon.active { color: var(--main-color); transform: translateY(-5px); }
-        .dock-icon.active::after { content:''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--main-color); border-radius: 50%; }
 
         .start-menu { 
             position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); width: 300px; 
-            background: #050505; border: 1px solid var(--main-color); 
+            background: #0a020e; border: 1px solid var(--main-color); 
             display: none; z-index: 9998; border-radius: 10px; overflow: hidden;
         }
         .menu-item { padding: 15px; border-bottom: 1px solid #222; cursor: pointer; display: flex; align-items: center; gap: 15px; transition: 0.2s; font-size: 0.9rem; }
         .menu-item:hover { background: var(--main-color); color: #000; }
 
-        /* --- OVERLAYS --- */
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
-        .popup { background: #000; border: 1px solid var(--main-color); width: 90%; max-width: 600px; padding: 30px; box-shadow: 0 0 50px rgba(15, 255, 80, 0.2); }
-        
         @media (max-width: 900px) {
-            .main-layout { grid-template-columns: 1fr; gap: 40px; }
+            .main-layout { grid-template-columns: 1fr; gap: 30px; }
             .hud-header { grid-template-columns: 1fr; text-align: center; gap: 15px; }
             .hud-left, .hud-right { justify-content: center; text-align: center; }
             .windows-container { display: flex; flex-direction: column; gap: 20px; min-height: auto; }
-            .window { position: relative !important; top: auto !important; left: auto !important; width: 100% !important; max-width: 100% !important; margin-bottom: 10px; z-index: 1 !important; }
+            /* Mobile window adaptation */
+            .window { position: relative !important; top: auto !important; left: auto !important; width: 100% !important; max-width: 100% !important; margin-bottom: 10px; z-index: 1 !important; height: auto !important; min-width: 0 !important; }
             .taskbar { bottom: 0; width: 100%; border-radius: 0; border-bottom: none; border-left: none; border-right: none; }
+            .lfm-grid-stats { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
 <body>
 
     <canvas id="matrix-canvas"></canvas>
-    <div class="crt-lines"></div>
+    <div class="crt-lines" id="crt-overlay"></div>
     <div class="vignette"></div>
 
     <div class="container">
@@ -222,13 +233,12 @@
                 <span><i class="fas fa-hdd"></i> DISK: 8TB</span>
             </div>
             <div class="hud-center">
-                <div class="sys-title">ALQKY OS</div>
-                <div class="sys-subtitle">KERNEL v5.0 // ALK-NET</div>
+                <div class="sys-title">ALQKY CARD</div>
+                <div class="sys-subtitle">KERNEL v7.0 // PURPLE-GREEN</div>
             </div>
             <div class="hud-right">
                 <div style="display:flex; align-items:center; gap:10px; justify-content: flex-end;">
                     <span id="clock-display">00:00:00</span>
-                    <span class="status-dot"></span>
                 </div>
                 <div id="date-display" style="color:#888;">YYYY-MM-DD</div>
                 <button class="lang-btn" onclick="toggleLanguage()">LANG: EN/ES</button>
@@ -244,12 +254,12 @@
                 <a href="https://www.instagram.com/gallery_chip23/" target="_blank" class="artist-credit"><i class="fas fa-paint-brush"></i> Art by @gallery_chip23</a>
                 
                 <h1 style="font-size: 2.2rem; margin-bottom: 5px;">ALQKY</h1>
-                <p style="color: #66cc66; font-size: 0.7rem; margin-bottom: 20px;" data-lang-key="role">ASPIRING GRAPHIC DESIGNER & AUDIO ENTHUSIAST</p>
+                <p style="color: var(--accent-color); font-size: 0.8rem; margin-bottom: 20px; font-weight:bold; letter-spacing:1px;" data-lang-key="role">DISEÑADOR GRÁFICO PROMEDIO</p>
                 
-                <div style="text-align:left; border-top: 1px solid #333; padding-top: 15px; margin-bottom: 15px;">
+                <div style="text-align:left; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-bottom: 15px;">
                     <div style="margin-bottom:5px; font-size:0.75rem; color:#888;">BIO_DATA:</div>
                     <p style="font-size:0.85rem; line-height: 1.5;" data-lang-key="bio">
-                        Creative mind exploring the digital frontier. Loves high-fidelity audio, competitive gaming, and creating visual noise.
+                        Diseñador Gráfico Promedio. Amante de la musica, juegos competitivos y crear ruido visual.
                     </p>
                 </div>
 
@@ -268,30 +278,57 @@
 
             <div class="windows-container" id="desktop-area">
 
-                <!-- LAST.FM WINDOW (ADVANCED STATS) -->
-                <div class="window" id="win-lastfm" style="top: 0; left: 0; width: 500px; height: auto;">
+                <!-- SETTINGS WINDOW -->
+                <div class="window" id="win-settings" style="top: 0; left: 0; z-index: 100; display: none;">
                     <div class="win-header">
-                        <span class="win-title"><i class="fab fa-lastfm"></i> WEEKLY REPORT</span>
+                        <span class="win-title" data-lang-key="settings_title"><i class="fas fa-cog"></i> SETTINGS</span>
+                        <div class="win-controls">
+                            <button class="btn-close" onclick="closeWindow(this)"></button>
+                        </div>
+                    </div>
+                    <div class="win-content">
+                        <div style="text-align:center; font-weight:bold; margin-bottom:10px;">SYSTEM COLOR</div>
+                        <div class="color-picker-grid">
+                            <div class="color-dot active" style="background:#bd00ff;" onclick="changeTheme('#bd00ff', '#0fff50', this)"></div>
+                            <div class="color-dot" style="background:#0fff50;" onclick="changeTheme('#0fff50', '#ffffff', this)"></div>
+                            <div class="color-dot" style="background:#00ffff;" onclick="changeTheme('#00ffff', '#ffffff', this)"></div>
+                            <div class="color-dot" style="background:#ff0055;" onclick="changeTheme('#ff0055', '#ffffff', this)"></div>
+                        </div>
+                        <div style="margin-top:20px;">
+                            <div class="switch-row">
+                                <span>CRT Scanlines</span>
+                                <input type="checkbox" checked onchange="document.getElementById('crt-overlay').style.display = this.checked ? 'block' : 'none'">
+                            </div>
+                            <div class="switch-row">
+                                <span>Matrix BG</span>
+                                <input type="checkbox" onchange="toggleMatrix(this.checked)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LAST.FM WINDOW (Dynamic Width) -->
+                <div class="window" id="win-lastfm" style="top: 0; left: 0; width: 100%; max-width:550px;">
+                    <div class="win-header">
+                        <span class="win-title" data-lang-key="weekly_report"><i class="fab fa-lastfm"></i> WEEKLY REPORT</span>
                         <div class="win-controls">
                             <button class="btn-min" onclick="minimizeWindow(this)"></button>
                             <button class="btn-close" onclick="closeWindow(this)"></button>
                         </div>
                     </div>
                     <div class="win-content" style="padding:0;">
-                        <!-- Top Banner / Now Playing -->
                         <img id="lfm-header-bg" src="" class="lfm-header-art">
                         <div class="lfm-now-playing-box">
                             <img id="lfm-main-cover" src="https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png" class="lfm-main-cover">
                             <div class="lfm-np-text">
                                 <div style="font-size:0.7rem; font-weight:bold; color:var(--main-color); text-shadow:1px 1px 2px #000;" id="lfm-status">LAST PLAYED</div>
-                                <div id="lfm-track" style="font-weight:900; font-size:1.1rem; line-height:1.1; text-shadow:2px 2px 2px #000;">Loading...</div>
+                                <div id="lfm-track" class="lfm-track-title">Loading...</div>
                                 <div id="lfm-artist" style="font-size:0.9rem; color:#ddd; text-shadow:1px 1px 2px #000;">Connecting...</div>
                             </div>
                         </div>
 
-                        <!-- Weekly Grid -->
                         <div style="padding: 15px;">
-                            <div style="font-size:0.7rem; color:#888; border-bottom:1px solid #333; padding-bottom:5px; margin-bottom:5px;">WEEKLY HIGHLIGHTS</div>
+                            <div style="font-size:0.7rem; color:#888; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:5px; margin-bottom:5px;">WEEKLY HIGHLIGHTS</div>
                             
                             <div class="lfm-grid-stats">
                                 <div class="lfm-stat-card">
@@ -311,14 +348,28 @@
                                 </div>
                             </div>
 
-                            <div style="display:flex; justify-content:space-between; margin-top:10px; background:#111; padding:8px; border-radius:4px;">
+                            <div style="display:flex; justify-content:space-between; margin-top:10px; background:rgba(0,0,0,0.5); padding:8px; border-radius:4px;">
                                 <div style="text-align:center; flex:1;">
-                                    <div style="font-size:0.6rem; color:#666;">TOTAL SCROBBLES</div>
+                                    <div style="font-size:0.6rem; color:#888;">TOTAL SCROBBLES</div>
                                     <div style="font-size:1rem; color:var(--main-color); font-weight:bold;" id="lfm-total">---</div>
                                 </div>
-                                <div style="text-align:center; flex:1; border-left:1px solid #333;">
-                                    <div style="font-size:0.6rem; color:#666;">THIS WEEK</div>
-                                    <div style="font-size:1rem; color:#fff; font-weight:bold;" id="lfm-weekly">---</div>
+                                <div style="text-align:center; flex:1; border-left:1px solid rgba(255,255,255,0.1);">
+                                    <div style="font-size:0.6rem; color:#888;" data-lang-key="this_week">THIS WEEK</div>
+                                    <div style="font-size:1rem; color:var(--accent-color); font-weight:bold;" id="lfm-weekly">---</div>
+                                </div>
+                            </div>
+
+                            <div style="margin-top:15px;">
+                                <div style="font-size:0.7rem; color:#888;">TOP TAGS</div>
+                                <div class="lfm-tag-cloud" id="lfm-tags">
+                                    <span class="lfm-tag">Loading tags...</span>
+                                </div>
+                            </div>
+
+                            <div style="margin-top:15px;">
+                                <div style="font-size:0.7rem; color:#888;">RECENT HISTORY</div>
+                                <div class="lfm-history-list" id="lfm-history">
+                                    <div class="lfm-hist-item">Loading history...</div>
                                 </div>
                             </div>
                         </div>
@@ -326,7 +377,7 @@
                 </div>
 
                 <!-- HONOR OF KINGS -->
-                <div class="window" id="win-hok" style="top: 0; left: 520px;">
+                <div class="window" id="win-hok" style="top: 0; left: 560px;">
                     <div class="win-header">
                         <span class="win-title"><i class="fas fa-dragon"></i> HONOR OF KINGS</span>
                         <div class="win-controls">
@@ -349,17 +400,17 @@
                                 <div style="font-weight:bold;">MID LANE</div>
                             </div>
                         </div>
-                        <div class="progress-bar" style="background:#221111; margin-top:5px;">
-                            <div style="width:80%; height:4px; background:#ff0055;"></div>
+                        <div class="progress-bar" style="background:#221111; margin-top:5px; height: 4px; width: 100%;">
+                            <div style="width:80%; height:100%; background:#ff0055;"></div>
                         </div>
                         <div style="text-align:right; font-size:0.7rem; margin-top:2px;">Winrate: 80%</div>
                     </div>
                 </div>
 
-                <!-- LOL STATS -->
-                <div class="window" id="win-lol" style="top: 250px; left: 520px;">
+                <!-- LEAGUE OF LEGENDS -->
+                <div class="window" id="win-lol" style="top: 250px; left: 560px;">
                     <div class="win-header">
-                        <span class="win-title"><i class="fas fa-gamepad"></i> LEAGUE OPS</span>
+                        <span class="win-title" data-lang-key="lol_title"><i class="fas fa-gamepad"></i> LEAGUE OF LEGENDS</span>
                         <div class="win-controls">
                             <button class="btn-min" onclick="minimizeWindow(this)"></button>
                             <button class="btn-close" onclick="closeWindow(this)"></button>
@@ -382,7 +433,7 @@
                 </div>
 
                 <!-- OSU STATS -->
-                <div class="window" id="win-osu" style="top: 480px; left: 520px;">
+                <div class="window" id="win-osu" style="top: 480px; left: 560px;">
                     <div class="win-header">
                         <span class="win-title"><i class="fas fa-circle-notch"></i> OSU! TRACKER</span>
                         <div class="win-controls">
@@ -391,22 +442,35 @@
                         </div>
                     </div>
                     <div class="win-content">
-                         <div style="display:grid; grid-template-columns:1fr 1fr; gap:5px;">
-                            <div class="lfm-stat-card"><div class="lfm-card-label">PP</div><div class="lfm-card-val">6,017</div></div>
-                            <div class="lfm-stat-card"><div class="lfm-card-label">ACC</div><div class="lfm-card-val">99.02%</div></div>
+                        <div style="display:flex; gap:15px; align-items:center; margin-bottom:15px;">
+                            <!-- Corrected Direct Link -->
+                            <img src="https://i.postimg.cc/Ff27GHk8/image.png" style="width:60px; height:60px; border-radius:10px; border:1px solid #ff66aa; display:block; object-fit:cover;">
+                            <div>
+                                <div style="font-weight:bold; font-size:1.1rem; color:#ff66aa;">Alqky</div>
+                                <div style="font-size:0.6rem; color:#888;">Medals: 66</div>
+                            </div>
+                        </div>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:5px;">
+                            <div class="lfm-stat-card"><div class="lfm-card-label">PP</div><div class="lfm-card-val">6,033</div></div>
+                            <div class="lfm-stat-card"><div class="lfm-card-label">Play Time</div><div class="lfm-card-val">33d 18h</div></div>
                         </div>
                         <div class="game-rank" style="margin-top:10px;">
                             <div class="rank-icon" style="background:#ff66aa; color:#fff;">#</div>
                             <div style="flex:1;">
                                 <div style="font-size:0.8rem; color:#888;">Global Rank</div>
-                                <div style="font-weight:bold;">#45,614</div>
+                                <div style="font-weight:bold;">#56,782</div>
                             </div>
                         </div>
+                        <div style="display:flex; justify-content:space-between; margin-top:5px; font-size:0.7rem; color:#ccc;">
+                            <span>National: #411</span>
+                            <span>Regional: #1</span>
+                        </div>
+                        <div style="margin-top:5px; font-size:0.7rem; color:#888; text-align:right;">Peak Rank: #45,614</div>
                     </div>
                 </div>
 
-                <!-- TERMINAL / CONSOLE -->
-                <div class="window" id="win-term" style="top: 360px; left: 0; width: 500px;">
+                <!-- TERMINAL -->
+                <div class="window" id="win-term" style="top: 600px; left: 0; width: 100%; max-width:550px;">
                     <div class="win-header">
                         <span class="win-title"><i class="fas fa-terminal"></i> SYS.TERMINAL</span>
                         <div class="win-controls">
@@ -416,9 +480,9 @@
                     </div>
                     <div class="win-content">
                         <div class="term-inline" id="console-output"></div>
-                        <div style="display:flex; margin-top:5px; border-top:1px solid #333; padding-top:5px;">
+                        <div style="display:flex; margin-top:5px; border-top:1px solid rgba(255,255,255,0.1); padding-top:5px;">
                             <span style="color:var(--main-color); margin-right:5px;">admin@alqky:~$</span>
-                            <input type="text" id="console-input" style="background:transparent; border:none; color:#fff; flex:1; outline:none; font-family:inherit;" autocomplete="off" placeholder="Try 'help', 'crypto'">
+                            <input type="text" id="console-input" style="background:transparent; border:none; color:#fff; flex:1; outline:none; font-family:inherit;" autocomplete="off" placeholder="Try 'osu', 'help'">
                         </div>
                     </div>
                 </div>
@@ -436,6 +500,7 @@
             <i class="fas fa-gamepad dock-icon" onclick="openWindow('win-lol')"></i>
             <i class="fas fa-circle-notch dock-icon" onclick="openWindow('win-osu')"></i>
             <i class="fas fa-terminal dock-icon active" onclick="openWindow('win-term')"></i>
+            <i class="fas fa-cog dock-icon" onclick="openWindow('win-settings')"></i>
         </div>
         <div style="font-size:0.8rem; font-weight:bold; color:#888;" id="taskbar-clock">00:00</div>
     </div>
@@ -445,40 +510,43 @@
         <div style="background:#111; padding:10px; font-size:0.7rem; color:#666; font-weight:bold;">APPLICATIONS</div>
         <div class="menu-item" onclick="openWindow('win-lastfm')"><i class="fab fa-lastfm"></i> Weekly Report</div>
         <div class="menu-item" onclick="openWindow('win-hok')"><i class="fas fa-dragon"></i> Honor of Kings</div>
-        <div class="menu-item" onclick="openWindow('win-lol')"><i class="fas fa-gamepad"></i> League Stats</div>
+        <div class="menu-item" onclick="openWindow('win-lol')"><i class="fas fa-gamepad"></i> League of Legends</div>
         <div class="menu-item" onclick="openWindow('win-osu')"><i class="fas fa-circle-notch"></i> Osu! Stats</div>
+        <div class="menu-item" onclick="openWindow('win-settings')"><i class="fas fa-cog"></i> Settings</div>
         <div class="menu-item" onclick="location.reload()"><i class="fas fa-power-off" style="color:red;"></i> System Reboot</div>
     </div>
 
     <script>
-        // --- CONFIG & TRANSLATIONS ---
+        // --- TRANSLATIONS ---
         const translations = {
             es: { 
-                role: "ESTUDIANTE DE DISEÑO & ENTUSIASTA DE AUDIO", date_locale: "es-MX", 
+                role: "DISEÑADOR GRÁFICO PROMEDIO", date_locale: "es-MX", 
                 rank: "Rango Actual", role_game: "Rol Principal",
-                bio: "Mente creativa explorando la frontera digital. Amante del audio de alta fidelidad, juegos competitivos y crear ruido visual.",
-                top_artist: "Top Artista", top_album: "Top Álbum", top_track: "Top Canción"
+                bio: "Diseñador Gráfico Promedio. Amante del audio de alta fidelidad, juegos competitivos y crear ruido visual.",
+                top_artist: "Top Artista", top_album: "Top Álbum", top_track: "Top Canción",
+                weekly_report: "REPORTE SEMANAL", lol_title: "LEAGUE OF LEGENDS",
+                this_week: "ESTA SEMANA", settings_title: "AJUSTES"
             },
             en: { 
-                role: "ASPIRING GRAPHIC DESIGNER & AUDIO ENTHUSIAST", date_locale: "en-US", 
+                role: "AVERAGE GRAPHIC DESIGNER", date_locale: "en-US", 
                 rank: "Current Rank", role_game: "Primary Role",
-                bio: "Creative mind exploring the digital frontier. Loves high-fidelity audio, competitive gaming, and creating visual noise.",
-                top_artist: "Top Artist", top_album: "Top Album", top_track: "Top Track"
+                bio: "Average Graphic Designer. Lover of music, competitive games, and creating visual noise.",
+                top_artist: "Top Artist", top_album: "Top Album", top_track: "Top Track",
+                weekly_report: "WEEKLY REPORT", lol_title: "LEAGUE OF LEGENDS",
+                this_week: "THIS WEEK", settings_title: "SETTINGS"
             }
         };
-        let currentLang = 'en';
+        let currentLang = 'es'; // Changed default to ES to match bio default
 
-        // --- CLOCK & DATE ---
+        // --- CORE FUNCTIONS ---
         function updateClock() {
             const now = new Date();
             document.getElementById('clock-display').innerText = now.toLocaleTimeString([], {hour12: false});
             document.getElementById('taskbar-clock').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            
             const locale = translations[currentLang].date_locale;
             document.getElementById('date-display').innerText = now.toLocaleDateString(locale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).toUpperCase();
         }
-        setInterval(updateClock, 1000);
-        updateClock();
+        setInterval(updateClock, 1000); updateClock();
 
         function toggleLanguage() {
             currentLang = currentLang === 'en' ? 'es' : 'en';
@@ -486,7 +554,7 @@
             document.querySelectorAll('[data-lang-key]').forEach(el => {
                 const key = el.getAttribute('data-lang-key');
                 if(t[key]) {
-                     if(el.children.length > 0 && el.children[0].tagName === 'I') {
+                    if(el.children.length > 0 && el.children[0].tagName === 'I') {
                         const icon = el.children[0].outerHTML;
                         el.innerHTML = icon + " " + t[key];
                     } else {
@@ -497,164 +565,177 @@
             updateClock(); 
         }
 
-        // --- WINDOW MANAGER (FIXED DRAGGING) ---
+        // --- THEME SETTINGS ---
+        function changeTheme(main, accent, el) {
+            document.documentElement.style.setProperty('--main-color', main);
+            document.documentElement.style.setProperty('--accent-color', accent);
+            document.documentElement.style.setProperty('--glow', `0 0 15px ${main}40`);
+            document.querySelectorAll('.color-dot').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+        }
+        
+        let matrixInterval;
+        function toggleMatrix(enable) {
+            const cvs = document.getElementById('matrix-canvas');
+            const ctx = cvs.getContext('2d');
+            if(enable) { 
+                cvs.style.display = 'block'; 
+                cvs.width = window.innerWidth; cvs.height = window.innerHeight;
+                const letters = "01010101ABCDEFGHIJKLMNOPQRSTUVWXYZ"; const fs = 14; const cols = cvs.width/fs; const drops = Array(Math.floor(cols)).fill(1);
+                function draw() {
+                    ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; ctx.fillRect(0, 0, cvs.width, cvs.height);
+                    ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--main-color'); ctx.font = fs + "px monospace";
+                    for(let i=0; i<drops.length; i++) {
+                        ctx.fillText(letters.charAt(Math.floor(Math.random()*letters.length)), i*fs, drops[i]*fs);
+                        if(drops[i]*fs > cvs.height && Math.random() > 0.975) drops[i]=0; drops[i]++;
+                    }
+                }
+                clearInterval(matrixInterval); matrixInterval = setInterval(draw, 33);
+            } else { cvs.style.display = 'none'; clearInterval(matrixInterval); }
+        }
+
+
+        // --- DRAGGING LOGIC ---
         function makeDraggable(el) {
-            // Simply check if it's draggable by the header
             const h = el.querySelector(".win-header");
             if(!h) return;
-
             let isDragging = false;
             let startX, startY, initialLeft, initialTop;
-
             h.onmousedown = (e) => {
-                if(e.target.tagName === 'BUTTON') return; // Don't drag if clicking buttons
-                
-                // Only allow drag on desktop or if screen is large enough, 
-                // OR just allow it everywhere but use CSS media queries to handle positioning reset on resize
-                if(window.innerWidth < 900) return; 
-
-                e.preventDefault();
-                isDragging = true;
-                startX = e.clientX;
-                startY = e.clientY;
-                initialLeft = el.offsetLeft;
-                initialTop = el.offsetTop;
-                
+                if(e.target.tagName === 'BUTTON') return; 
+                // Removed width check to allow dragging on resized desktop windows, CSS handles mobile layout overrides
+                e.preventDefault(); isDragging = true;
+                startX = e.clientX; startY = e.clientY;
+                initialLeft = el.offsetLeft; initialTop = el.offsetTop;
                 bringToFront(el);
-                
                 document.onmouseup = () => { isDragging = false; document.onmousemove = null; };
                 document.onmousemove = (e) => {
-                    if(!isDragging) return;
-                    e.preventDefault();
-                    const dx = e.clientX - startX;
-                    const dy = e.clientY - startY;
-                    el.style.left = `${initialLeft + dx}px`;
-                    el.style.top = `${initialTop + dy}px`;
+                    if(!isDragging) return; e.preventDefault();
+                    el.style.left = `${initialLeft + (e.clientX - startX)}px`;
+                    el.style.top = `${initialTop + (e.clientY - startY)}px`;
                 };
             };
         }
-        function bringToFront(el) {
-            document.querySelectorAll('.window').forEach(w => w.style.zIndex = 10);
-            el.style.zIndex = 20;
-        }
+        function bringToFront(el) { document.querySelectorAll('.window').forEach(w => w.style.zIndex = 10); el.style.zIndex = 20; }
         document.querySelectorAll('.window').forEach(w => { makeDraggable(w); w.onmousedown = () => bringToFront(w); });
-
         function closeWindow(btn) { btn.closest('.window').style.opacity = '0'; setTimeout(()=>btn.closest('.window').style.display='none', 200); }
         function minimizeWindow(btn) { btn.closest('.window').classList.toggle('minimized'); }
         function openWindow(id) {
-            const w = document.getElementById(id); 
-            w.style.display = 'flex'; 
-            setTimeout(()=>w.style.opacity = '1', 10);
-            w.classList.remove('minimized'); 
-            bringToFront(w);
-            if(window.innerWidth < 900) w.scrollIntoView({behavior: "smooth", block: "center"});
+            const w = document.getElementById(id); w.style.display = 'flex'; 
+            setTimeout(()=>w.style.opacity = '1', 10); w.classList.remove('minimized'); 
+            bringToFront(w); if(window.innerWidth < 900) w.scrollIntoView({behavior: "smooth", block: "center"});
             document.getElementById('start-menu').style.display = 'none';
         }
         function toggleStartMenu() { const m = document.getElementById('start-menu'); m.style.display = m.style.display === 'block' ? 'none' : 'block'; }
 
-        // --- TERMINAL LOGIC ---
+        // --- TERMINAL ---
         const termOut = document.getElementById('console-output');
-        const bootLines = ["Loading Kernel v5.0...", "User: ALQKY", "Audio Drivers... [OK]", "GPU... [OK]", "System Ready."];
-        
+        const bootLines = ["Kernel v7.0...", "User: ALQKY", "Osu: Static Data Loaded", "System Ready."];
         async function runBootSequence() {
             for(let line of bootLines) {
                 termOut.innerHTML += `<div class="term-line">> ${line}</div>`;
-                termOut.scrollTop = termOut.scrollHeight;
-                await new Promise(r => setTimeout(r, 200));
+                termOut.scrollTop = termOut.scrollHeight; await new Promise(r => setTimeout(r, 200));
             }
-            termOut.innerHTML += `<div class="term-line" style="color:var(--main-color)">Waiting for input...<span class="term-cursor"></span></div>`;
         }
         runBootSequence();
-
         document.getElementById('console-input').addEventListener('keydown', async function(e) {
             if(e.key === 'Enter') {
                 const cmd = this.value.trim().toLowerCase();
                 termOut.innerHTML += `<div class="term-line" style="color:#fff">$ ${cmd}</div>`;
-                if(cmd === 'help') termOut.innerHTML += `<div class="term-line">cmds: crypto, clear, reboot</div>`;
+                if(cmd === 'help') termOut.innerHTML += `<div class="term-line">cmds: settings, osu, clear, reboot</div>`;
+                else if(cmd === 'settings') openWindow('win-settings');
                 else if(cmd === 'clear') termOut.innerHTML = '';
                 else if(cmd === 'reboot') location.reload();
-                else if(cmd === 'crypto') {
-                    try {
-                        const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd');
-                        const data = await res.json();
-                        termOut.innerHTML += `<div class="term-line" style="color:#ffd700">BTC: $${data.bitcoin.usd}</div>`;
-                        termOut.innerHTML += `<div class="term-line" style="color:#00ffff">ETH: $${data.ethereum.usd}</div>`;
-                    } catch(err) { termOut.innerHTML += `<div class="term-line" style="color:red">API Error</div>`; }
+                else if(cmd === 'osu') {
+                    termOut.innerHTML += `<div class="term-line" style="color:#ff66aa">-- OSU STATS --<br>Rank: #56,782 (Peak: #45,614)<br>PP: 6033<br>Medals: 66<br>Playtime: 33d 18h<br>National: #411 / Regional: #1</div>`;
                 }
                 else termOut.innerHTML += `<div class="term-line" style="color:#ff5555">Error.</div>`;
-                this.value = '';
-                termOut.scrollTop = termOut.scrollHeight;
+                this.value = ''; termOut.scrollTop = termOut.scrollHeight;
             }
         });
 
-        /* --- LAST.FM API (ADVANCED WEEKLY) --- */
+        /* --- LAST.FM API --- */
         (function() {
-            const _0x1 = 'fa4e3c11'; const _0x2 = 'a7dece71'; const _0x3 = 'a0e07435'; const _0x4 = 'f13b49e2';
-            const API_KEY = _0x1 + _0x2 + _0x3 + _0x4;
+            // Obfuscated Key (Reversed)
+            const _k = "2e94b31f53470e0a17eced7a11c3e4af"; 
+            const API_KEY = _k.split('').reverse().join('');
             const USER = 'Alekiin';
             const URL_BASE = 'https://ws.audioscrobbler.com/2.0/';
 
             async function fetchLFM() {
                 try {
-                    // 1. NOW PLAYING
-                    const recentRes = await fetch(`${URL_BASE}?method=user.getrecenttracks&user=${USER}&api_key=${API_KEY}&format=json&limit=1`);
+                    // 1. RECENT TRACKS & HISTORY
+                    const recentRes = await fetch(`${URL_BASE}?method=user.getrecenttracks&user=${USER}&api_key=${API_KEY}&format=json&limit=10`);
                     const recentData = await recentRes.json();
-                    const track = recentData.recenttracks.track[0];
-                    const isPlaying = track['@attr'] && track['@attr'].nowplaying;
+                    
+                    const tracks = recentData.recenttracks.track;
+                    if(tracks.length > 0) {
+                        const current = tracks[0];
+                        const isPlaying = current['@attr'] && current['@attr'].nowplaying;
 
-                    document.getElementById('lfm-track').innerText = track.name;
-                    document.getElementById('lfm-artist').innerText = track.artist['#text'];
-                    document.getElementById('lfm-status').innerText = isPlaying ? "NOW PLAYING" : "LAST PLAYED";
-                    document.getElementById('lfm-status').style.color = isPlaying ? "#0fff50" : "#ff0055";
+                        // UI Update - Now Playing
+                        document.getElementById('lfm-track').innerText = current.name;
+                        document.getElementById('lfm-artist').innerText = current.artist['#text'];
+                        document.getElementById('lfm-status').innerText = isPlaying ? "NOW PLAYING" : "LAST PLAYED";
+                        document.getElementById('lfm-status').style.color = isPlaying ? "#0fff50" : "#ff0055";
 
-                    if(track.image[3]['#text']) {
-                        document.getElementById('lfm-main-cover').src = track.image[3]['#text'];
-                        document.getElementById('lfm-header-bg').src = track.image[3]['#text'];
+                        if(current.image[3]['#text']) {
+                            document.getElementById('lfm-main-cover').src = current.image[3]['#text'];
+                            document.getElementById('lfm-header-bg').src = current.image[3]['#text'];
+                        }
+
+                        // UI Update - History List
+                        const histContainer = document.getElementById('lfm-history');
+                        histContainer.innerHTML = '';
+                        tracks.slice(1, 6).forEach(t => {
+                            histContainer.innerHTML += `<div class="lfm-hist-item"><span>${t.name}</span><span style="color:#888">${t.artist['#text']}</span></div>`;
+                        });
                     }
 
-                    // 2. USER INFO (Total Scrobbles)
+                    // 2. USER INFO
                     const userRes = await fetch(`${URL_BASE}?method=user.getinfo&user=${USER}&api_key=${API_KEY}&format=json`);
                     const userData = await userRes.json();
                     document.getElementById('lfm-total').innerText = parseInt(userData.user.playcount).toLocaleString();
 
-                    // 3. WEEKLY CHART - TOP ARTIST
-                    const wArtistRes = await fetch(`${URL_BASE}?method=user.getweeklyartistchart&user=${USER}&api_key=${API_KEY}&format=json&limit=1`);
-                    const wArtistData = await wArtistRes.json();
-                    if(wArtistData.weeklyartistchart.artist.length > 0) {
-                        const topArt = wArtistData.weeklyartistchart.artist[0];
-                        document.getElementById('lfm-top-artist').innerText = topArt.name;
-                        document.getElementById('lfm-top-artist-count').innerText = topArt.playcount + " scrobbles";
-                    }
+                    // 3. TOP TAGS
+                    const tagsRes = await fetch(`${URL_BASE}?method=user.gettoptags&user=${USER}&api_key=${API_KEY}&format=json&limit=5`);
+                    const tagsData = await tagsRes.json();
+                    const tagContainer = document.getElementById('lfm-tags');
+                    tagContainer.innerHTML = '';
+                    tagsData.toptags.tag.forEach(tag => {
+                        tagContainer.innerHTML += `<span class="lfm-tag">${tag.name}</span>`;
+                    });
 
-                    // 4. WEEKLY CHART - TOP ALBUM (NOTE: Last.fm API calls this getweeklyalbumchart but sometimes returns XML, lets stick to artist/track mostly, or try generic topalbums for 7 days)
-                    // Actually, let's use getTopAlbums with period='7day' which is cleaner API wise
-                    const wAlbumRes = await fetch(`${URL_BASE}?method=user.gettopalbums&user=${USER}&api_key=${API_KEY}&format=json&limit=1&period=7day`);
-                    const wAlbumData = await wAlbumRes.json();
-                    if(wAlbumData.topalbums.album.length > 0) {
-                         const topAlb = wAlbumData.topalbums.album[0];
-                         document.getElementById('lfm-top-album').innerText = topAlb.name;
-                         document.getElementById('lfm-top-album-count').innerText = topAlb.playcount + " scrobbles";
-                    }
-
-                    // 5. WEEKLY CHART - TOP TRACK (using period=7day)
-                    const wTrackRes = await fetch(`${URL_BASE}?method=user.gettoptracks&user=${USER}&api_key=${API_KEY}&format=json&limit=1&period=7day`);
-                    const wTrackData = await wTrackRes.json();
-                    if(wTrackData.toptracks.track.length > 0) {
-                         const topTrk = wTrackData.toptracks.track[0];
-                         document.getElementById('lfm-top-track').innerText = topTrk.name;
-                         document.getElementById('lfm-top-track-count').innerText = topTrk.playcount + " scrobbles";
-                    }
-                    
-                    // Weekly Total Calculation (approx from track chart or explicit call)
-                    // We can use getWeeklyTrackChart to sum up plays
+                    // 4. REAL WEEKLY STATS (Sum of Weekly Chart)
                     const wChartRes = await fetch(`${URL_BASE}?method=user.getweeklytrackchart&user=${USER}&api_key=${API_KEY}&format=json`);
                     const wChartData = await wChartRes.json();
-                    // Just count length of unique tracks is not total scrobbles, but the chart usually contains playcount.
-                    // Let's sum playcounts in the chart
                     let weeklySum = 0;
-                    wChartData.weeklytrackchart.track.forEach(t => weeklySum += parseInt(t.playcount));
+                    if(wChartData.weeklytrackchart && wChartData.weeklytrackchart.track) {
+                        wChartData.weeklytrackchart.track.forEach(t => weeklySum += parseInt(t.playcount));
+                    }
                     document.getElementById('lfm-weekly').innerText = weeklySum.toLocaleString();
 
+                    // 5. WEEKLY CHARTS
+                    const artRes = await fetch(`${URL_BASE}?method=user.gettopartists&user=${USER}&api_key=${API_KEY}&format=json&period=7day&limit=1`);
+                    const artData = await artRes.json();
+                    if(artData.topartists.artist[0]) {
+                        document.getElementById('lfm-top-artist').innerText = artData.topartists.artist[0].name;
+                        document.getElementById('lfm-top-artist-count').innerText = artData.topartists.artist[0].playcount + " scrobbles";
+                    }
+
+                    const albRes = await fetch(`${URL_BASE}?method=user.gettopalbums&user=${USER}&api_key=${API_KEY}&format=json&period=7day&limit=1`);
+                    const albData = await albRes.json();
+                    if(albData.topalbums.album[0]) {
+                        document.getElementById('lfm-top-album').innerText = albData.topalbums.album[0].name;
+                        document.getElementById('lfm-top-album-count').innerText = albData.topalbums.album[0].playcount + " scrobbles";
+                    }
+
+                    const trkRes = await fetch(`${URL_BASE}?method=user.gettoptracks&user=${USER}&api_key=${API_KEY}&format=json&period=7day&limit=1`);
+                    const trkData = await trkRes.json();
+                    if(trkData.toptracks.track[0]) {
+                        document.getElementById('lfm-top-track').innerText = trkData.toptracks.track[0].name;
+                        document.getElementById('lfm-top-track-count').innerText = trkData.toptracks.track[0].playcount + " scrobbles";
+                    }
 
                 } catch (error) { console.log("LFM Error", error); }
             }
